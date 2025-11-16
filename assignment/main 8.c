@@ -3,11 +3,11 @@
 #include <time.h>
 #include <string.h>
 
-#define NUM_ELEMENTS 10000    // µ¥ÀÌÅÍ °³¼ö
-#define MAX_VALUE 1000001     // µ¥ÀÌÅÍ ¹üÀ§ 0 ~ 1,000,000
-#define NUM_TRIALS 100        // ½ÇÇà È½¼ö
+#define NUM_ELEMENTS 10000    // ë°ì´í„° ê°œìˆ˜
+#define MAX_VALUE 1000001     // ë°ì´í„° ë²”ìœ„ 0 ~ 1,000,000
+#define NUM_TRIALS 100        // ì‹¤í–‰ íšŸìˆ˜
 
-// ´Ü¼ø »ğÀÔ Á¤·Ä
+// ë‹¨ìˆœ ì‚½ì… ì •ë ¬
 long long insertion_sort(int arr[], int size) {
     long long comparisonCount = 0;
     int i, j, key;
@@ -16,59 +16,59 @@ long long insertion_sort(int arr[], int size) {
         key = arr[i];
 
         for (j = i - 1; j >= 0; j--) {
-            comparisonCount++; // ºñ±³ È½¼ö Ä«¿îÆ®
+            comparisonCount++; // ë¹„êµ íšŸìˆ˜ ì¹´ìš´íŠ¸
 
-            if (arr[j] > key)        // »ğÀÔ À§Ä¡ Ã£±â
-                arr[j + 1] = arr[j]; // µÚ·Î ÀÌµ¿
+            if (arr[j] > key)        // ì‚½ì… ìœ„ì¹˜ ì°¾ê¸°
+                arr[j + 1] = arr[j]; // ë’¤ë¡œ ì´ë™
             else
-                break;               // »ğÀÔ À§Ä¡ Ã£À½
+                break;               // ì‚½ì… ìœ„ì¹˜ ì°¾ìŒ
         }
-        arr[j + 1] = key;           // key »ğÀÔ
+        arr[j + 1] = key;           // key ì‚½ì…
     }
     return comparisonCount;
 }
 
-// ±âº» ¼Ğ Á¤·Ä (N/2, N/4 ...)
+// ê¸°ë³¸ ì…¸ ì •ë ¬ (N/2, N/4 ...)
 long long shell_sort_basic(int arr[], int size) {
     long long comparisonCount = 0;
     int i, j, temp;
 
-    for (int gap = size / 2; gap > 0; gap /= 2) { // °£°İ ÁÙÀÌ±â
+    for (int gap = size / 2; gap > 0; gap /= 2) { // ê°„ê²© ì¤„ì´ê¸°
         for (i = gap; i < size; i++) {
             temp = arr[i];
             for (j = i; j >= gap; j -= gap) {
-                comparisonCount++;   // ºñ±³ Ä«¿îÆ®
+                comparisonCount++;   // ë¹„êµ ì¹´ìš´íŠ¸
                 if (arr[j - gap] > temp)
-                    arr[j] = arr[j - gap]; // µÚ·Î ÀÌµ¿
+                    arr[j] = arr[j - gap]; // ë’¤ë¡œ ì´ë™
                 else
                     break;
             }
-            arr[j] = temp; // °ª »ğÀÔ
+            arr[j] = temp; // ê°’ ì‚½ì…
         }
     }
     return comparisonCount;
 }
 
-// ÃÖÀû ¼Ğ Á¤·Ä (Knuth ¼ö¿­)
+// ìµœì  ì…¸ ì •ë ¬ (Knuth ìˆ˜ì—´)
 long long shell_sort_knuth(int arr[], int size) {
     long long comparisonCount = 0;
     int i, j, temp;
 
     int h = 1;
-    while (h < size / 3)           // Knuth ¼ö¿­ ÃÖ´ë°ª Ã£±â
+    while (h < size / 3)           // Knuth ìˆ˜ì—´ ìµœëŒ€ê°’ ì°¾ê¸°
         h = h * 3 + 1;
 
-    for (int gap = h; gap > 0; gap = (gap - 1) / 3) { // °£°İ ÁÙÀÌ¸é¼­ Á¤·Ä
+    for (int gap = h; gap > 0; gap = (gap - 1) / 3) { // ê°„ê²© ì¤„ì´ë©´ì„œ ì •ë ¬
         for (i = gap; i < size; i++) {
             temp = arr[i];
             for (j = i; j >= gap; j -= gap) {
-                comparisonCount++; // ºñ±³ Ä«¿îÆ®
+                comparisonCount++; // ë¹„êµ ì¹´ìš´íŠ¸
                 if (arr[j - gap] > temp)
-                    arr[j] = arr[j - gap]; // µÚ·Î ÀÌµ¿
+                    arr[j] = arr[j - gap]; // ë’¤ë¡œ ì´ë™
                 else
                     break;
             }
-            arr[j] = temp; // °ª »ğÀÔ
+            arr[j] = temp; // ê°’ ì‚½ì…
         }
     }
     return comparisonCount;
@@ -77,61 +77,61 @@ long long shell_sort_knuth(int arr[], int size) {
 
 
 int main() {
-    // ¹è¿­ Èü ÇÒ´ç
+    // ë°°ì—´ í™ í• ë‹¹
     int* original_array = malloc(sizeof(int) * NUM_ELEMENTS);
     int* test_array = malloc(sizeof(int) * NUM_ELEMENTS);
 
-    if (!original_array || !test_array) { // ½ÇÆĞ ½Ã Á¾·á
-        printf("¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ!\n");
+    if (!original_array || !test_array) { // ì‹¤íŒ¨ ì‹œ ì¢…ë£Œ
+        printf("ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨!\n");
         return 1;
     }
 
-    srand(time(NULL)); // ·£´ı ½Ãµå
+    srand(time(NULL)); // ëœë¤ ì‹œë“œ
 
     long double total_insertion = 0;
     long double total_shell_basic = 0;
     long double total_shell_knuth = 0;
 
-    printf("µ¥ÀÌÅÍ %d°³, ÃÑ %dÈ¸ ½ÇÇà\n\n", NUM_ELEMENTS, NUM_TRIALS);
+    printf("ë°ì´í„° %dê°œ, ì´ %díšŒ ì‹¤í–‰\n\n", NUM_ELEMENTS, NUM_TRIALS);
 
-    // NUM_TRIALS ¹İº¹
+    // NUM_TRIALS ë°˜ë³µ
     for (int i = 0; i < NUM_TRIALS; i++) {
-        // ·£´ı µ¥ÀÌÅÍ »ı¼º
+        // ëœë¤ ë°ì´í„° ìƒì„±
         for (int j = 0; j < NUM_ELEMENTS; j++) {
             original_array[j] = rand() % MAX_VALUE;
         }
 
-        // »ğÀÔ Á¤·Ä
+        // ì‚½ì… ì •ë ¬
         memcpy(test_array, original_array, sizeof(int) * NUM_ELEMENTS);
         total_insertion += insertion_sort(test_array, NUM_ELEMENTS);
 
-        // ±âº» ¼Ğ Á¤·Ä
+        // ê¸°ë³¸ ì…¸ ì •ë ¬
         memcpy(test_array, original_array, sizeof(int) * NUM_ELEMENTS);
         total_shell_basic += shell_sort_basic(test_array, NUM_ELEMENTS);
 
-        // ÃÖÀû ¼Ğ Á¤·Ä
+        // ìµœì  ì…¸ ì •ë ¬
         memcpy(test_array, original_array, sizeof(int) * NUM_ELEMENTS);
         total_shell_knuth += shell_sort_knuth(test_array, NUM_ELEMENTS);
 
-        if (i == NUM_TRIALS - 1) // ¸¶Áö¸· 1È¸¸¸ Ãâ·Â
-            printf("...%dÈ¸ ½ÇÇà ¿Ï·á\n", NUM_TRIALS);
+        if (i == NUM_TRIALS - 1) // ë§ˆì§€ë§‰ 1íšŒë§Œ ì¶œë ¥
+            printf("...%díšŒ ì‹¤í–‰ ì™„ë£Œ\n", NUM_TRIALS);
     }
 
-    // °á°ú Ãâ·Â
+    // ê²°ê³¼ ì¶œë ¥
     printf("\n_______________________________________________________\n");
-    printf(" [°á°ú] µ¥ÀÌÅÍ %d°³, %dÈ¸ ½ÇÇà Æò±Õ ºñ±³ È½¼ö\n",
+    printf(" [ê²°ê³¼] ë°ì´í„° %dê°œ, %díšŒ ì‹¤í–‰ í‰ê·  ë¹„êµ íšŸìˆ˜\n",
         NUM_ELEMENTS, NUM_TRIALS);
     printf("_______________________________________________________\n");
 
-    printf(" 1. ´Ü¼ø »ğÀÔ Á¤·Ä:           %.0Lf È¸\n",
+    printf(" 1. ë‹¨ìˆœ ì‚½ì… ì •ë ¬:           %.0Lf íšŒ\n",
         total_insertion / NUM_TRIALS);
-    printf(" 2. ±âº» ¼Ğ Á¤·Ä (N/2):       %.0Lf È¸\n",
+    printf(" 2. ê¸°ë³¸ ì…¸ ì •ë ¬ (N/2):       %.0Lf íšŒ\n",
         total_shell_basic / NUM_TRIALS);
-    printf(" 3. ÃÖÀû ¼Ğ Á¤·Ä (Knuth):     %.0Lf È¸\n",
+    printf(" 3. ìµœì  ì…¸ ì •ë ¬ (Knuth):     %.0Lf íšŒ\n",
         total_shell_knuth / NUM_TRIALS);
 
     printf("_______________________________________________________\n");
-    printf(" * ÃÖÀû ¼Ğ Á¤·ÄÀº Knuth ¼ö¿­ »ç¿ë\n");
+    printf(" * ìµœì  ì…¸ ì •ë ¬ì€ Knuth ìˆ˜ì—´ ì‚¬ìš©\n");
 
     free(original_array);
     free(test_array);
